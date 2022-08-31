@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="power_off_anim_frames_duration">
+        <item>@integer/power_off_anim_duration</item>
+    </integer-array>
+    <integer-array name="power_on_anim_frames_duration">
+        <item>@integer/power_on_first_frame_duration</item>
+        <item>@integer/power_on_intermediate_frame_duration</item>
+        <item>@integer/power_on_intermediate_frame_duration</item>
+        <item>@integer/power_on_intermediate_frame_duration</item>
+        <item>@integer/power_on_intermediate_frame_duration</item>
+        <item>@integer/power_on_intermediate_frame_duration</item>
+        <item>@integer/power_on_intermediate_frame_duration</item>
+        <item>@integer/power_on_intermediate_frame_duration</item>
+        <item>@integer/power_on_intermediate_frame_duration</item>
+        <item>@integer/power_on_last_frame_duration</item>
+    </integer-array>
+    <array name="preloaded_fonts">
+        <item>@font/motorola_screen_type</item>
+    </array>
+</resources>
