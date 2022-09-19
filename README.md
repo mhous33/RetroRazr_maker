@@ -16,8 +16,12 @@
 ```
 git clone https://github.com/mhous33/RetroRazr_maker.git
 ```
+* Install dependencies:
+	* Java 8 or higher
+	* Python 3
+	* timg
+	* unzip
 * Enter directory and launch the make script:
-	* Script verifies dependencies based on apt package manager
 ```
 cd RetroRazr_maker
 ./make

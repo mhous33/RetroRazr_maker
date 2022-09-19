@@ -1,22 +1,5 @@
 #!/usr/bin/env bash
 
-check_dependencies () {
-	for pkg in openjdk-8-jre python3-minimal timg unzip ; do
-		if ! dpkg-query -W -f='${Status}' "$pkg" | grep -q "ok installed" ; then
-			while true ; do
-				read -p "This script requires "$pkg", install? (y/N): " install
-				case $install in
-					[yY] ) echo "Installing "$pkg" .."
-						sudo apt install "$pkg" -y
-						break;;
-					[nN] ) echo "Exiting .."
-						exit;;
-					* ) echo "Invalid response.";;
-				esac
-			done
-		fi
-	done
-}
 start_new () {
 	if [[ -d RetroRazr ]] ; then
 		rm -rf RetroRazr
@@ -27,10 +10,11 @@ enter_vpixel () {
 	echo "RESOLUTION:"
 	echo""
 	vpixel=""
-	while [[ ! $vpixel =~ ^[0-9]{4} ]] ; do
-		read -n 4 -p "Please enter vertical pixel value of target: " vpixel
+	while ! [[ $vpixel =~ ^[0-9]{4} ]] ; do
+		read -p "Please enter vertical pixel value of target: " vpixel
 		echo ""
 	done
+	multiplier=$(echo "print($vpixel/2142)" | python3)
 	echo ""
 }
 select_sr () {
@@ -42,9 +26,7 @@ select_sr () {
 	PS3="Please select a SR style for UI elements: "
 	select style in x4 anime ; do
 		case $style in
-			x4 ) sr="x4"
-				break;;
-			anime ) sr="anime"
+			$style ) sr=$style
 				break;;
 			* ) echo "Invalid option.";;
 		esac
@@ -57,7 +39,7 @@ select_skin () {
 	timg -g80 -W --grid=5 --title=%b files/$sr/previews/*
 	echo ""
 	PS3="Please select a skin: "
-	skins=`basename -a files/$sr/skins/*`
+	skins=$(basename -a files/$sr/skins/*)
 	COLUMNS=1
 	select skin in $skins ; do
 		case $skin in
@@ -75,7 +57,7 @@ select_wallpaper () {
 	timg -g80 -W --grid=5 --title=%b files/$sr/wallpapers/*
 	echo ""
 	PS3="Please select a wallpaper: "
-	wallpapers=`basename -a files/$sr/wallpapers/*`
+	wallpapers=$(basename -a files/$sr/wallpapers/*)
 	COLUMNS=1
 	select wallpaper in $wallpapers ; do
 		case $wallpaper in
@@ -89,7 +71,7 @@ select_wallpaper () {
 edit_files () {
 	cp files/$sr/common/* RetroRazr/res/drawable
 	cp -r files/common/root/* RetroRazr
-	python3 utils/multiple.py `echo "print($vpixel/2142)" | python3` files/common/root/res/values/dimens.xml RetroRazr/res/values/dimens.xml
+	python3 utils/multiple.py $multiplier files/common/root/res/values/dimens.xml RetroRazr/res/values/dimens.xml
 	sed -i "s/RetroRazr/RetroRazr\-$vpixel\-$sr\-$skin\-$wallpaper/g" RetroRazr/apktool.yml
 	for f in RetroRazr/res/values/public.xml RetroRazr/res/drawable/ui_powerup_{11..15}.png ; do
 		rm "$f"
@@ -97,7 +79,8 @@ edit_files () {
 }
 summarize () {
 	echo "SUMMARY:"
-	echo "Resolution: $vpixel"
+	echo "Resolution: width x $vpixel"
+	echo "Multiplier: $multiplier"
 	echo "SR style: $sr"
 	echo "Skin: $skin"
 	echo "Wallpaper: $wallpaper"
@@ -120,7 +103,6 @@ build_apk () {
 	else echo "Build failed."
 	fi
 }
-check_dependencies
 clear
 echo ""
 echo "-----------------"
