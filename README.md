@@ -1,9 +1,9 @@
 # RetroRazr maker
 ### Motorola's RetroRazr app improved
 ##### Depixelated UI rendered from original V3 elements
-* 2 super resolution styles to select from
 * 15 original wallpapers to select from
 * 5 original skins to select from
+* 2 super resolution styles to select from
 * Original Synergy font
 * Original startup and shutdown sounds
 ##### Ability to use as launcher home
@@ -17,23 +17,31 @@
 * p7zip
 * python3
 * timg
+* kitty (optional, improves terminal image resolution)
 ##### Clone this repository
 * Or download the zip and extract
 ```
 git clone https://github.com/mhous33/RetroRazr_maker.git
 ```
-##### Enter directory and launch the make script
+##### Enter directory
 ```
 cd RetroRazr_maker
+```
+##### Launch the make script
+```
 ./make
 ```
-* Customize super resolution style
-	* x4: standard style 4x enhancement used to upscale
-	* anime: anime style 4x enhancement used to upscale
+* Or optionally, for improved terminal image resolution
+```
+kitty ./make
+```
 * Customize wallpaper
 * Customize skin
 * Customize target device's vertical pixel value
 	* used to scale dimensions properly
+* Customize super resolution style
+	* x4: standard style 4x enhancement used to upscale
+	* anime: anime style 4x enhancement used to upscale
 * Build
 ### Credits & Sources
 Original V3 firmware [Planet Moto X](https://web.archive.org/web/20080730031435/http://www.planetmotox.net/monster_packs.php)
